@@ -1,9 +1,9 @@
 <?php
-// Database configuration for XAMPP MySQL
-$host = "localhost";
-$dbname = "skillswap";
-$username = "root";
-$password = "";
+// Database configuration for InfinityFree MySQL
+$host = "sql209.infinityfree.com";
+$dbname = "if0_43351014_skillswap";
+$username = "if0_43351014";
+$password = "2IXag0vRZdju";
 
 try {
     $conn = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password, [
