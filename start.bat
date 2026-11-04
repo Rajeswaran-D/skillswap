@@ -5,30 +5,31 @@ echo ========================================================
 echo        SkillSwap - Student Skill Exchange Platform
 echo ========================================================
 echo.
-echo Starting the SkillSwap server...
+echo Opening SkillSwap in your default web browser...
+start "" "index.html"
 echo.
-
-:: Check if Python is installed
-python --version >nul 2>&1
-if %errorlevel% neq 0 (
-    echo [ERROR] Python is not found on your system PATH!
-    echo Please install Python 3 or add it to PATH to run the app.
-    pause
-    exit /b 1
-)
-
-:: Open the browser after 2 seconds in a background thread
-start "" cmd /c "timeout /t 2 /nobreak >nul && start http://localhost:8080/login"
-
-echo Server URL: http://localhost:8080/login
-echo.
-echo [INFO] The application will open in your default browser shortly.
-echo [INFO] Press Ctrl+C in this window to stop the server.
+echo [SUCCESS] SkillSwap is now running directly in your browser!
+echo (Pure static HTML/CSS/JS with LocalStorage database)
 echo.
 echo ========================================================
+echo  HOW TO HOST DIRECTLY ON GITHUB PAGES:
+echo ========================================================
+echo  1. Commit and push this project to your GitHub repository:
+echo        git add .
+echo        git commit -m "Add GitHub Pages static edition"
+echo        git push origin main
 echo.
-
-:: Run the Python server
-python run_app.py
-
+echo  2. Open your repository on GitHub:
+echo        Go to Settings -^> Pages
+echo.
+echo  3. Under "Build and deployment":
+echo        Source: Deploy from a branch
+echo        Branch: main
+echo        Folder: / (root)
+echo        Click "Save"
+echo.
+echo  4. In 1 minute, your live site URL will be ready at:
+echo        https://<your-username>.github.io/<repo-name>/
+echo ========================================================
+echo.
 pause

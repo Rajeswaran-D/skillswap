@@ -1,0 +1,274 @@
+/* ========================================================
+   SkillSwap – Student Skill Exchange Platform
+   Custom Modern Styles (GitHub Pages Static Edition)
+   ======================================================== */
+
+:root {
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    --secondary-color: #64748b;
+    --success-color: #10b981;
+    --info-color: #06b6d4;
+    --warning-color: #f59e0b;
+    --danger-color: #ef4444;
+    --light-bg: #f8fafc;
+    --card-border: #e2e8f0;
+    --text-dark: #0f172a;
+    --text-muted: #64748b;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: var(--light-bg);
+    color: var(--text-dark);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+/* Navbar */
+.navbar-brand {
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    font-size: 1.35rem;
+}
+
+.brand-icon {
+    font-size: 1.4rem;
+}
+
+.gh-badge {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #fff;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+/* Cards */
+.card {
+    border: 1px solid var(--card-border);
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+}
+
+.card-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--card-border);
+    font-weight: 600;
+    border-top-left-radius: 0.75rem !important;
+    border-top-right-radius: 0.75rem !important;
+}
+
+/* Stat Cards */
+.stat-card {
+    background: #ffffff;
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    border: 1px solid var(--card-border);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.stat-icon.blue {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.stat-icon.green {
+    background: #d1fae5;
+    color: #047857;
+}
+
+.stat-icon.amber {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.stat-icon.purple {
+    background: #ede9fe;
+    color: #6d28d9;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* Table styling */
+.table th {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #64748b;
+    font-weight: 600;
+    border-top: none;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+/* Badges */
+.badge-teach {
+    background-color: #d1fae5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+    font-weight: 600;
+}
+
+.badge-learn {
+    background-color: #e0f2fe;
+    color: #075985;
+    border: 1px solid #bae6fd;
+    font-weight: 600;
+}
+
+.badge-pending {
+    background-color: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fde68a;
+    font-weight: 600;
+}
+
+.badge-accepted {
+    background-color: #d1fae5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+    font-weight: 600;
+}
+
+.badge-rejected {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+    font-weight: 600;
+}
+
+/* Hero Section */
+.hero-box {
+    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+    color: #ffffff;
+    border-radius: 1rem;
+    padding: 2.5rem 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.25);
+}
+
+.hero-box h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.hero-box p {
+    color: #e0e7ff;
+    font-size: 1.05rem;
+}
+
+/* Quick login buttons */
+.quick-login-btn {
+    border-radius: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 0.45rem 0.75rem;
+    transition: all 0.15s ease;
+}
+
+.quick-login-btn:hover {
+    transform: translateY(-1px);
+}
+
+/* Search input */
+.search-wrapper {
+    position: relative;
+}
+
+.search-wrapper i {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+}
+
+.search-wrapper input {
+    padding-left: 36px;
+    border-radius: 0.5rem;
+}
+
+/* Filter pills */
+.filter-pill {
+    cursor: pointer;
+    border-radius: 999px;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+    border: 1px solid var(--card-border);
+    background: #ffffff;
+    color: var(--text-muted);
+    transition: all 0.15s ease;
+    user-select: none;
+}
+
+.filter-pill:hover,
+.filter-pill.active {
+    background: var(--primary-color);
+    color: #ffffff;
+    border-color: var(--primary-color);
+}
+
+/* Toast container */
+.toast-container {
+    z-index: 9999;
+}
+
+/* Empty state */
+.empty-state {
+    padding: 2rem 1rem;
+    text-align: center;
+    color: #94a3b8;
+}
+
+.empty-state i {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    display: block;
+    opacity: 0.7;
+}
+
+/* Footer */
+footer {
+    border-top: 1px solid var(--card-border);
+    background-color: #ffffff;
+}

@@ -1,125 +1,136 @@
 # SkillSwap – Student Skill Exchange Platform
 
-A very simple, beginner-friendly peer-to-peer web application that enables college students to share skills they know and find peers who can teach skills they want to learn.
+A simple, beginner-friendly peer-to-peer web application that enables college students to share skills they know and find peers who can teach skills they want to learn.
+
+> **✨ GitHub Pages Ready:** This project now includes a **100% serverless, client-side static web edition** (`index.html`) that can be hosted directly on **GitHub Pages** with zero setup, zero database configuration, and zero server requirements!
 
 ---
 
-## 📌 Technology Stack
+## 🌐 Live GitHub Pages Deployment Guide (In 30 Seconds)
 
-- **Frontend:** HTML5, CSS3, Bootstrap 5, Vanilla JavaScript
-- **Backend (Student Auth & Views):** PHP
-- **Backend (Form Processing):** Java Servlets (JDBC)
-- **Database:** MySQL (Shared across PHP and Servlets)
-- **Servers:** XAMPP (Apache + MySQL) and Apache Tomcat
+You can host this entire project completely free on GitHub Pages:
+
+### Step 1: Push your code to GitHub
+If you haven't pushed the latest changes yet, run in your terminal:
+```bash
+git add .
+git commit -m "Enable GitHub Pages static hosting"
+git push origin main
+```
+
+### Step 2: Enable GitHub Pages in your Repository Settings
+1. Open your repository on GitHub: `https://github.com/Rajeswaran-D/skillswap`
+2. Click **Settings** (tab at the top right of the repository).
+3. In the left sidebar, click **Pages** (under the "Code and automation" section).
+4. Under **Build and deployment**:
+   - **Source:** Select `Deploy from a branch`
+   - **Branch:** Select `main`
+   - **Folder:** Select `/ (root)`
+5. Click **Save**.
+
+### Step 3: Access your Live App!
+In about 1 minute, GitHub will display your live site link:
+```text
+https://rajeswaran-d.github.io/skillswap/
+```
+Anyone visiting this link can immediately explore skills, register accounts, propose skill exchanges, and test the platform right from their web browser!
 
 ---
 
-## 🗄️ Database Architecture (Only 3 Tables)
+## 💻 Running Locally (Instant Zero-Config Mode)
 
-The database `skillswap` contains exactly three tables:
+You can run SkillSwap on your computer without installing Python, XAMPP, PHP, MySQL, or Tomcat:
 
-1. `students` – Stores registered student details (Name, Email, Hashed Password, Department).
-2. `skills` – Stores skills offered (`TEACH`) or wanted (`LEARN`) linked to students.
-3. `requests` – Stores exchange proposals (`sender_id`, `receiver_id`, `skill_id`, `message`, `status`: `PENDING`, `ACCEPTED`, `REJECTED`).
+- **Option 1:** Simply double-click [`start.bat`](file:///c:/Users/gmh08/OneDrive/Pictures/Desktop/wt/start.bat)
+- **Option 2:** Open [`index.html`](file:///c:/Users/gmh08/OneDrive/Pictures/Desktop/wt/index.html) directly in any web browser (Chrome, Edge, Firefox, Safari).
+
+### Built-in Demo Accounts (1-Click Login)
+The static version comes pre-seeded in browser `localStorage` with sample student accounts:
+- **Rahul Sharma** (`rahul@college.edu`) – *Computer Science* (Teaches Python, wants to learn UI/UX)
+- **Priya Patel** (`priya@college.edu`) – *Information Tech* (Teaches UI/UX Figma, wants to learn Java Servlets)
+- **Amit Verma** (`amit@college.edu`) – *Electronics* (Teaches Arduino & IoT)
+- *Default password for all sample accounts:* `123456`
+- **Quick Switch:** Use the dropdown in the top navigation bar to switch between students instantly without re-typing passwords!
+- **Reset Button:** Click the **Reset Demo** button anytime to restore the default sample dataset.
 
 ---
 
-## 📂 Project Folder Structure
+## 📂 Project Structure
 
 ```text
 wt/
-├── start.bat                       # One-click start file (double-click to run & open browser)
-├── run_app.py                      # Standalone instant runner (Zero dependencies)
-├── database/
-│   └── skillswap.sql               # MySQL database schema and sample seed records
-├── php/                            # Place in C:\xampp\htdocs\skillswap
-│   ├── config.php                  # Database connection (PDO) and session tracking
-│   ├── register.php                # Module 1: Student registration form with validation
-│   ├── login.php                   # Module 1: Student login form with password verification
-│   ├── logout.php                  # Module 1: Session termination
-│   ├── index.php                   # Module 2 & 3: Main student dashboard & request center
-│   └── style.css                   # Custom styles
-├── servlets/                       # Deploy to Tomcat webapps/skillswap-servlets
+├── index.html                       # Entry point for GitHub Pages & static hosting
+├── css/
+│   └── style.css                   # Modern styling & responsive card layouts
+├── js/
+│   └── app.js                      # Core frontend logic & LocalStorage DB layer
+├── start.bat                       # One-click instant browser launcher
+│
+├── database/                       # [Optional] MySQL database schema for lab evaluations
+│   └── skillswap.sql               # MySQL tables schema and sample records
+├── php/                            # [Optional] Traditional PHP backend files
+│   ├── config.php                  # PDO database connection
+│   ├── index.php                   # PHP dashboard view
+│   ├── login.php                   # PHP auth login
+│   ├── register.php                # PHP auth registration
+│   └── logout.php                  # PHP session termination
+├── servlets/                       # [Optional] Apache Tomcat Java Servlet backend
 │   ├── src/
-│   │   ├── AddSkillServlet.java    # Module 2: Processes skill form submissions via JDBC
-│   │   └── ProcessRequestServlet.java # Module 3: Processes send, accept, reject requests
+│   │   ├── AddSkillServlet.java    # Module 2: Add skill via JDBC
+│   │   └── ProcessRequestServlet.java # Module 3: Request exchange processing
 │   ├── WEB-INF/
-│   │   └── web.xml                 # Servlet mapping configuration
-│   └── compile.bat                 # One-click Windows compile script
-└── README.md                       # Setup and testing instructions
+│   │   └── web.xml                 # Servlet deployment descriptor
+│   └── compile.bat                 # Servlet compilation script
+├── run_app.py                      # [Optional] Local standalone Python server
+└── README.md                       # Documentation & deployment guide
 ```
 
 ---
 
-## 🚀 Step-by-Step Setup Guide
+## 🌟 Features Implemented
 
-### Step 1: Start XAMPP & Import MySQL Database
-1. Open **XAMPP Control Panel**.
-2. Start both **Apache** and **MySQL**.
-3. Open your browser and navigate to `http://localhost/phpmyadmin/`.
-4. Click **Import** > Choose file: `database/skillswap.sql` > Click **Go**.
-   *(This creates the `skillswap` database with sample student accounts and skills).*
+### Module 1: Student Authentication & Profiles
+- Student registration with full name, college email, department, and password.
+- Secure login and session handling.
+- Instant 1-click test student switcher in the navigation bar.
 
-### Step 2: Deploy PHP Application to XAMPP
-1. Copy the entire `php` folder to your XAMPP `htdocs` directory:
-   ```text
-   C:\xampp\htdocs\skillswap
-   ```
-2. Your PHP application is now accessible at: `http://localhost/skillswap/`.
+### Module 2: Skill Management
+- Add skills with categorized intent:
+  - 🟢 **TEACH:** Skills the student can share and teach.
+  - 🔵 **LEARN:** Skills the student is actively seeking to learn.
+- Detailed descriptions for each skill.
+- "My Skills" management view with quick deletion.
 
-### Step 3: Setup & Run Java Servlets in Apache Tomcat
-1. Copy the `servlets` folder to your Tomcat `webapps` directory and rename it to `skillswap-servlets`:
-   ```text
-   C:\apache-tomcat-9.0\webapps\skillswap-servlets\
-   ```
-2. Ensure MySQL Connector JAR (`mysql-connector-j-8.x.x.jar`) is placed in:
-   ```text
-   C:\apache-tomcat-9.0\lib\
-   ```
-   *(Or inside `skillswap-servlets\WEB-INF\lib\`)*.
-3. Compile the servlet source files into `WEB-INF/classes/` by running `compile.bat` or executing:
-   ```cmd
-   javac -cp "C:\apache-tomcat-9.0\lib\servlet-api.jar" -d "WEB-INF\classes" src\AddSkillServlet.java src\ProcessRequestServlet.java
-   ```
-4. Start Apache Tomcat by running:
-   ```cmd
-   C:\apache-tomcat-9.0\bin\startup.bat
-   ```
-   Tomcat runs on port `8080`.
-
-### Step 4: Open and Test the Application
-1. In your browser, open:
-   ```text
-   http://localhost/skillswap/
-   ```
-2. You can log in using one of the pre-configured sample student accounts:
-   - **Student 1:** Email: `rahul@college.edu` | Password: `123456`
-   - **Student 2:** Email: `priya@college.edu` | Password: `123456`
-   - **Student 3:** Email: `amit@college.edu` | Password: `123456`
-3. Or click **Register here** to create a brand new account!
+### Module 3: Skill Discovery & Exchange Proposals
+- **Live Search & Filter:** Instant real-time search across skill titles, descriptions, student names, and departments.
+- **Filter Pills:** Switch between "All", "Can Teach", and "Want to Learn".
+- **Exchange Proposal System:** Propose a skill exchange with a custom message.
+- **Incoming Proposals Center:** Accept or Reject proposals from fellow peers.
+- **Outgoing Status Tracker:** Real-time visibility into whether requests are `PENDING`, `ACCEPTED`, or `REJECTED`.
+- **Contact Reveal:** Once a proposal is accepted, students can immediately see each other's college emails to connect.
 
 ---
 
-## 🧪 Security & Performance Testing
+## 🔬 Optional: Traditional College Lab Setup (PHP + Tomcat + MySQL)
 
-### 1. Security Testing with OWASP ZAP (Zed Attack Proxy)
-1. Download and start **OWASP ZAP**.
-2. In the "Automated Scan" box, enter the target URL:
-   ```text
-   http://localhost/skillswap/login.php
-   ```
-3. Click **Attack**.
-4. **Key Security Controls Implemented:**
-   - **SQL Injection Prevention:** Every query in both PHP (`PDO::prepare`) and Java Servlets (`PreparedStatement`) uses parameter substitution (`?`), eliminating SQL injection risks.
-   - **XSS (Cross-Site Scripting) Defense:** All user inputs echoed on pages are filtered through `htmlspecialchars()`.
-   - **Password Security:** Passwords are never stored in plain text; they are hashed using PHP's standard `password_hash()` algorithm.
+If your college professor requires evaluating the original PHP + Tomcat + MySQL multi-tier architecture:
 
-### 2. Performance Testing with Google Lighthouse
-1. Open Google Chrome and visit `http://localhost/skillswap/`.
-2. Press `F12` (or right-click and choose **Inspect**) to open Chrome DevTools.
-3. Switch to the **Lighthouse** tab.
-4. Select **Desktop** and check **Performance**, **Accessibility**, **Best Practices**, and **SEO**.
-5. Click **Analyze page load**.
-6. **Expected Results:**
-   - Score **95+** across all categories due to lightweight structure, zero heavy JavaScript frameworks, and minified CDN assets.
-"# skillswap" 
+### 1. Database (MySQL via XAMPP)
+1. Start **Apache** and **MySQL** in XAMPP.
+2. Open `http://localhost/phpmyadmin/` and import [`database/skillswap.sql`](file:///c:/Users/gmh08/OneDrive/Pictures/Desktop/wt/database/skillswap.sql).
+
+### 2. PHP Frontend (XAMPP htdocs)
+1. Copy the `php` folder to `C:\xampp\htdocs\skillswap\`.
+2. Visit `http://localhost/skillswap/`.
+
+### 3. Java Servlets (Apache Tomcat)
+1. Copy `servlets` folder to `C:\apache-tomcat-9.0\webapps\skillswap-servlets\`.
+2. Compile servlets using `compile.bat` or `javac`.
+3. Start Tomcat on port `8080`.
+
+---
+
+## 🧪 Security & Quality Controls
+- **Client-Side Sanitization:** All user inputs are safely escaped (`escapeHTML`) preventing Cross-Site Scripting (XSS).
+- **Relational Integrity:** Cascading updates and deletion of associated exchange proposals when a skill is removed.
+- **Responsive Layout:** Built with Bootstrap 5 mobile-first grid, completely usable on phones, tablets, and desktop computers.
