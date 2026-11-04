@@ -2,9 +2,7 @@
 -- SkillSwap – Student Skill Exchange Platform Database
 -- Exactly 3 Tables: students, skills, requests
 -- ========================================================
-
-CREATE DATABASE IF NOT EXISTS skillswap;
-USE skillswap;
+-- Note: On shared hosting (InfinityFree), select your database from the left sidebar before importing.
 
 -- 1. Students Table
 DROP TABLE IF EXISTS requests;
