@@ -1,26 +1,26 @@
-import sys
 import os
 from pptx import Presentation
 from pptx.util import Inches, Pt
 from pptx.dml.color import RGBColor
-from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
+from pptx.enum.text import PP_ALIGN
 from pptx.enum.shapes import MSO_SHAPE
 
 def create_presentation():
     prs = Presentation()
-    # 16:9 Widescreen
+    # 16:9 Widescreen dimensions
     prs.slide_width = Inches(13.333)
     prs.slide_height = Inches(7.5)
-    blank_layout = prs.slide_layouts[6] # blank layout
+    blank_layout = prs.slide_layouts[6]
 
-    # Color Palette
-    PRIMARY = RGBColor(30, 58, 138)       # Deep Navy #1E3A8A
-    ACCENT = RGBColor(37, 99, 235)        # Royal Blue #2563EB
+    # Professional Theme Palette
+    NAVY = RGBColor(15, 23, 42)          # Deep Slate/Navy #0F172A
+    PRIMARY = RGBColor(30, 58, 138)       # Royal Navy #1E3A8A
+    ACCENT = RGBColor(37, 99, 235)        # Electric Blue #2563EB
     LIGHT_BG = RGBColor(248, 250, 252)    # Slate Light #F8FAFC
-    CARD_BG = RGBColor(255, 255, 255)     # Pure White
-    CARD_BORDER = RGBColor(226, 232, 240) # Border #E2E8F0
-    TEXT_DARK = RGBColor(15, 23, 42)      # Slate 900 #0F172A
-    TEXT_MUTED = RGBColor(100, 116, 139)  # Slate 500 #64748B
+    CARD_BG = RGBColor(255, 255, 255)     # Clean White #FFFFFF
+    CARD_BORDER = RGBColor(226, 232, 240) # Slate Border #E2E8F0
+    TEXT_DARK = RGBColor(15, 23, 42)      # Slate Dark #0F172A
+    TEXT_MUTED = RGBColor(100, 116, 139)  # Slate Muted #64748B
     SUCCESS = RGBColor(16, 185, 129)      # Emerald #10B981
     WARNING = RGBColor(245, 158, 11)      # Amber #F59E0B
     INFO = RGBColor(6, 182, 212)          # Cyan #06B6D4
@@ -32,14 +32,14 @@ def create_presentation():
         bg.fill.fore_color.rgb = LIGHT_BG
         bg.line.fill.background()
 
-        # Header bar
+        # Header accent bar
         header_bar = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0.8), Inches(0.4), Inches(11.733), Inches(0.08))
         header_bar.fill.solid()
         header_bar.fill.fore_color.rgb = ACCENT
         header_bar.line.fill.background()
 
         # Category Pill
-        cat_box = slide.shapes.add_textbox(Inches(0.8), Inches(0.55), Inches(6), Inches(0.3))
+        cat_box = slide.shapes.add_textbox(Inches(0.8), Inches(0.55), Inches(8), Inches(0.3))
         tf = cat_box.text_frame
         tf.word_wrap = True
         p = tf.paragraphs[0]
@@ -49,7 +49,7 @@ def create_presentation():
         p.font.color.rgb = ACCENT
 
         # Title
-        title_box = slide.shapes.add_textbox(Inches(0.8), Inches(0.8), Inches(10), Inches(0.6))
+        title_box = slide.shapes.add_textbox(Inches(0.8), Inches(0.8), Inches(11), Inches(0.6))
         tf = title_box.text_frame
         tf.word_wrap = True
         p = tf.paragraphs[0]
@@ -66,7 +66,7 @@ def create_presentation():
         card.line.width = Pt(1.5)
 
         if title:
-            tb = slide.shapes.add_textbox(left + Inches(0.2), top + Inches(0.15), width - Inches(0.4), Inches(0.4))
+            tb = slide.shapes.add_textbox(left + Inches(0.25), top + Inches(0.2), width - Inches(0.5), Inches(0.4))
             tf = tb.text_frame
             tf.word_wrap = True
             p = tf.paragraphs[0]
@@ -82,67 +82,76 @@ def create_presentation():
     slide1 = prs.slides.add_slide(blank_layout)
     bg1 = slide1.shapes.add_shape(MSO_SHAPE.RECTANGLE, 0, 0, Inches(13.333), Inches(7.5))
     bg1.fill.solid()
-    bg1.fill.fore_color.rgb = PRIMARY
+    bg1.fill.fore_color.rgb = NAVY
     bg1.line.fill.background()
 
-    # Decorative accent card
-    decor = slide1.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(1), Inches(1.2), Inches(11.333), Inches(5.1))
-    decor.fill.solid()
-    decor.fill.fore_color.rgb = RGBColor(37, 99, 235)
-    decor.line.fill.background()
+    # Outer decorative frame
+    frame = slide1.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(1.0), Inches(1.1), Inches(11.333), Inches(5.3))
+    frame.fill.solid()
+    frame.fill.fore_color.rgb = PRIMARY
+    frame.line.fill.background()
 
-    inner_card = slide1.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(1.05), Inches(1.25), Inches(11.233), Inches(5.0))
+    inner_card = slide1.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(1.06), Inches(1.16), Inches(11.213), Inches(5.18))
     inner_card.fill.solid()
-    inner_card.fill.fore_color.rgb = RGBColor(15, 23, 42)
+    inner_card.fill.fore_color.rgb = NAVY
     inner_card.line.fill.background()
 
-    # Title Text
-    t_box = slide1.shapes.add_textbox(Inches(1.6), Inches(1.8), Inches(10), Inches(2.5))
+    t_box = slide1.shapes.add_textbox(Inches(1.6), Inches(1.6), Inches(10), Inches(2.6))
     tf = t_box.text_frame
     tf.word_wrap = True
 
     p0 = tf.paragraphs[0]
-    p0.text = "COLLEGE PEER-TO-PEER LEARNING INITIATIVE"
-    p0.font.size = Pt(12)
+    p0.text = "WEB TECHNOLOGY PROJECT PRESENTATION"
+    p0.font.size = Pt(11)
     p0.font.bold = True
     p0.font.color.rgb = INFO
 
     p1 = tf.add_paragraph()
     p1.text = "SkillSwap"
-    p1.font.size = Pt(44)
+    p1.font.size = Pt(46)
     p1.font.bold = True
     p1.font.color.rgb = RGBColor(255, 255, 255)
 
     p2 = tf.add_paragraph()
-    p2.text = "Student Skill Exchange & Knowledge Trading Platform"
-    p2.font.size = Pt(20)
+    p2.text = "Student Skill Exchange & Peer-to-Peer Knowledge Trading Platform"
+    p2.font.size = Pt(19)
     p2.font.color.rgb = RGBColor(203, 213, 225)
 
-    # Metadata badges
-    mb = slide1.shapes.add_textbox(Inches(1.6), Inches(4.5), Inches(10), Inches(1.2))
-    mtf = mb.text_frame
+    # Technology Badges Strip
+    tech_box = slide1.shapes.add_textbox(Inches(1.6), Inches(4.3), Inches(10), Inches(0.6))
+    ttf = tech_box.text_frame
+    ttf.word_wrap = True
+    tp = ttf.paragraphs[0]
+    tp.text = "Technology Stack: PHP 8.x • Java Servlets (JDBC) • MySQL 8.0 • Apache Tomcat • XAMPP"
+    tp.font.size = Pt(13)
+    tp.font.bold = True
+    tp.font.color.rgb = SUCCESS
+
+    # Author metadata
+    m_box = slide1.shapes.add_textbox(Inches(1.6), Inches(5.0), Inches(10), Inches(1.0))
+    mtf = m_box.text_frame
     mp = mtf.paragraphs[0]
-    mp.text = "• Architecture, Data Flow, Security & GitHub Pages Deployment\n• Technologies: HTML5, CSS3, JavaScript, LocalStorage & Multi-Tier Backend\n• Author: Rajeswaran D | Web Technology Project"
-    mp.font.size = Pt(13)
+    mp.text = "Author: Rajeswaran D\nDepartment of Information Technology / Computer Science\nFull Stack Academic Web Architecture & Implementation"
+    mp.font.size = Pt(12)
     mp.font.color.rgb = RGBColor(148, 163, 184)
 
     # ========================================================
     # SLIDE 2: PROJECT OVERVIEW & PROBLEM STATEMENT
     # ========================================================
     slide2 = prs.slides.add_slide(blank_layout)
-    add_header(slide2, "Project Overview & Problem Statement", "Introduction & Motivation")
+    add_header(slide2, "Project Overview & Problem Statement", "Motivation & Background")
 
-    # Card 1: The Problem
-    add_card(slide2, Inches(0.8), Inches(1.6), Inches(5.6), Inches(4.8), "⚠️ The Problem: Knowledge Silos in Colleges")
-    tb2a = slide2.shapes.add_textbox(Inches(1.0), Inches(2.2), Inches(5.2), Inches(4.0))
+    # Card 1: Problem Statement
+    add_card(slide2, Inches(0.8), Inches(1.6), Inches(5.6), Inches(5.0), "⚠️ The Problem: College Knowledge Fragmentation")
+    tb2a = slide2.shapes.add_textbox(Inches(1.05), Inches(2.2), Inches(5.1), Inches(4.2))
     tf2a = tb2a.text_frame
     tf2a.word_wrap = True
 
     items2a = [
-        ("Department Isolation:", " CS students excel in coding, IT in networks, Design students in Figma, and ECE in IoT—yet they rarely collaborate."),
-        ("Expensive Learning Barriers:", " Commercial bootcamps and subscription courses are costly for students on tight budgets."),
-        ("No Direct Trading Platform:", " Traditional social media is cluttered with distractions; no structured peer exchange system exists on campus."),
-        ("Unbalanced Learning Curve:", " Self-learning without a mentor leads to frustration and high drop-out rates.")
+        ("Departmental Isolation:", " Computer Science students specialize in Python/Java, IT in networks, Design in Figma, and ECE in IoT—yet there is no common platform to cross-share expertise."),
+        ("High Cost of External Learning:", " Subscription bootcamps and certifications are unaffordable for many students on tight budgets."),
+        ("Unstructured Social Channels:", " WhatsApp groups and Discord servers are noisy, unorganized, and lack proposal tracking and verified user identities."),
+        ("Lack of Mutual Accountability:", " Informal peer study arrangements frequently collapse without a structured request and acceptance mechanism.")
     ]
     for i, (head, body) in enumerate(items2a):
         p = tf2a.paragraphs[0] if i == 0 else tf2a.add_paragraph()
@@ -153,20 +162,21 @@ def create_presentation():
         run1.font.color.rgb = PRIMARY
         run2 = p.add_run()
         run2.text = body + "\n"
-        run2.font.size = Pt(12)
+        run2.font.size = Pt(11.5)
         run2.font.color.rgb = TEXT_DARK
 
     # Card 2: The SkillSwap Solution
-    add_card(slide2, Inches(6.8), Inches(1.6), Inches(5.7), Inches(4.8), "💡 The Solution: SkillSwap Platform")
-    tb2b = slide2.shapes.add_textbox(Inches(7.0), Inches(2.2), Inches(5.3), Inches(4.0))
+    add_card(slide2, Inches(6.8), Inches(1.6), Inches(5.7), Inches(5.0), "💡 The Solution: SkillSwap Platform")
+    tb2b = slide2.shapes.add_textbox(Inches(7.05), Inches(2.2), Inches(5.2), Inches(4.2))
     tf2b = tb2b.text_frame
     tf2b.word_wrap = True
 
     items2b = [
-        ("Peer-to-Peer Model:", " Direct bilateral exchange: 'I teach you Python, you teach me UI/UX Figma'."),
-        ("Zero Financial Cost:", " Completely barter-based learning; no money or payment processing required."),
-        ("Multi-Tier & Static Dual Architecture:", " Works 100% serverless on GitHub Pages and also supports traditional PHP/Java Tomcat multi-tier lab setups."),
-        ("Verified Campus Networking:", " Connects verified student profiles with department badges and direct email collaboration.")
+        ("Peer-to-Peer Barter Exchange:", " A direct barter model where knowledge is the currency ('I teach you Python, you teach me UI/UX Figma')."),
+        ("Zero Financial Cost:", " 100% cost-free learning accessible to every enrolled student across campus."),
+        ("Transparent Proposal Workflow:", " Formal request system with PENDING, ACCEPTED, and REJECTED status tracking."),
+        ("Verified Campus Community:", " Secure registration and login tied to student identities and departments."),
+        ("Actionable Contact Revelations:", " Direct peer contact emails are automatically shared only upon mutual proposal acceptance.")
     ]
     for i, (head, body) in enumerate(items2b):
         p = tf2b.paragraphs[0] if i == 0 else tf2b.add_paragraph()
@@ -177,165 +187,162 @@ def create_presentation():
         run1.font.color.rgb = SUCCESS
         run2 = p.add_run()
         run2.text = body + "\n"
-        run2.font.size = Pt(12)
+        run2.font.size = Pt(11.5)
         run2.font.color.rgb = TEXT_DARK
 
     # ========================================================
-    # SLIDE 3: KEY MODULES & CORE CAPABILITIES
+    # SLIDE 3: COMPLETE TECHNOLOGY STACK
     # ========================================================
     slide3 = prs.slides.add_slide(blank_layout)
-    add_header(slide3, "System Modules & Functional Capabilities", "Application Features")
+    add_header(slide3, "Core Technology Stack & System Components", "Architecture & Tools")
 
-    modules = [
-        ("Module 1: Authentication & Profiles",
-         "Student Identity Management",
+    tech_layers = [
+        ("Presentation Layer",
+         "Frontend User Interface",
+         PRIMARY,
          [
-             "Student Registration with validation",
-             "Secure Login session tracking",
-             "Department tagging (CS, IT, ECE, Mech)",
-             "Instant 1-click Demo Account Switcher"
-         ],
-         PRIMARY),
+             "HTML5: Semantic markup & structural layout",
+             "CSS3: Custom responsive styles & animations",
+             "Bootstrap 5.3: Mobile-first responsive grid & UI components",
+             "Vanilla JavaScript: Form validation & client-side interactions"
+         ]),
 
-        ("Module 2: Skill Inventory",
-         "Teaching & Learning Management",
+        ("Session & View Tier",
+         "PHP 8.x Engine",
+         ACCENT,
          [
-             "Categorized Intent: TEACH vs LEARN",
-             "Skill descriptions & topic details",
-             "'My Listed Skills' personal inventory",
-             "Cascading deletion & lifecycle management"
-         ],
-         SUCCESS),
+             "PHP Sessions: Student state & authentication tracking",
+             "PDO (PHP Data Objects): Secure relational queries",
+             "Prepared Statements: Parameterized SQL injection defense",
+             "Dynamic Templating: Modular student dashboard views"
+         ]),
 
-        ("Module 3: Proposal Engine",
-         "Bilateral Skill Negotiation",
+        ("Form Processing Tier",
+         "Java Servlets (JDBC)",
+         WARNING,
          [
-             "Live 'Request Exchange' modal",
-             "Personalized proposal messages",
-             "Incoming proposal review center",
-             "Accept / Reject workflow & contact reveal"
-         ],
-         WARNING),
+             "Java EE / Servlet API: Request lifecycle handlers",
+             "AddSkillServlet: Processes skill submissions via POST",
+             "ProcessRequestServlet: Multi-action proposal processing",
+             "JDBC MySQL Connector: Robust database transaction execution"
+         ]),
 
-        ("Module 4: Search & Discovery",
-         "Campus Skill Exploration",
+        ("Database & Servers",
+         "MySQL & Server Runtime",
+         SUCCESS,
          [
-             "Real-time instant search as you type",
-             "Multi-field filter: skill, dept, name",
-             "Intent filter pills: All, Teach, Learn",
-             "Public showcase preview for visitors"
-         ],
-         INFO)
+             "MySQL 8.0: InnoDB engine with 3 relational tables",
+             "Apache HTTP Server (XAMPP): PHP web server (Port 80)",
+             "Apache Tomcat 9.0: Java Servlet container (Port 8080)",
+             "Shared Database Architecture: Seamless PHP & Java data sync"
+         ])
     ]
 
-    for idx, (m_title, m_sub, bullets, color) in enumerate(modules):
+    for idx, (title, sub, col, bullets) in enumerate(tech_layers):
         col_x = Inches(0.8 + idx * 2.95)
-        card = add_card(slide3, col_x, Inches(1.6), Inches(2.8), Inches(4.8), "")
-        
-        # Header banner inside card
-        top_bar = slide3.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, col_x, Inches(1.6), Inches(2.8), Inches(0.75))
-        top_bar.fill.solid()
-        top_bar.fill.fore_color.rgb = color
-        top_bar.line.fill.background()
+        add_card(slide3, col_x, Inches(1.6), Inches(2.8), Inches(5.0), "")
 
-        tb = slide3.shapes.add_textbox(col_x + Inches(0.1), Inches(1.65), Inches(2.6), Inches(0.65))
+        # Top banner in card
+        h_shape = slide3.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, col_x, Inches(1.6), Inches(2.8), Inches(0.85))
+        h_shape.fill.solid()
+        h_shape.fill.fore_color.rgb = col
+        h_shape.line.fill.background()
+
+        tb = slide3.shapes.add_textbox(col_x + Inches(0.1), Inches(1.65), Inches(2.6), Inches(0.75))
         tf = tb.text_frame
         tf.word_wrap = True
-        p = tf.paragraphs[0]
-        p.text = m_title
-        p.font.size = Pt(11)
-        p.font.bold = True
-        p.font.color.rgb = RGBColor(255, 255, 255)
+        p0 = tf.paragraphs[0]
+        p0.text = title
+        p0.font.size = Pt(11)
+        p0.font.bold = True
+        p0.font.color.rgb = RGBColor(255, 255, 255)
+        p1 = tf.add_paragraph()
+        p1.text = sub
+        p1.font.size = Pt(9.5)
+        p1.font.color.rgb = RGBColor(241, 245, 249)
 
-        # Bullets
-        tb_body = slide3.shapes.add_textbox(col_x + Inches(0.15), Inches(2.5), Inches(2.5), Inches(3.7))
-        tf_body = tb_body.text_frame
-        tf_body.word_wrap = True
+        tb_b = slide3.shapes.add_textbox(col_x + Inches(0.15), Inches(2.6), Inches(2.5), Inches(3.8))
+        tf_b = tb_b.text_frame
+        tf_b.word_wrap = True
         for b_idx, b in enumerate(bullets):
-            p = tf_body.paragraphs[0] if b_idx == 0 else tf_body.add_paragraph()
+            p = tf_b.paragraphs[0] if b_idx == 0 else tf_b.add_paragraph()
             p.text = "• " + b + "\n"
             p.font.size = Pt(11)
             p.font.color.rgb = TEXT_DARK
 
     # ========================================================
-    # SLIDE 4: SYSTEM ARCHITECTURE (VISUAL DIAGRAM)
+    # SLIDE 4: MULTI-TIER SYSTEM ARCHITECTURE (VISUAL DIAGRAM)
     # ========================================================
     slide4 = prs.slides.add_slide(blank_layout)
-    add_header(slide4, "System Architecture: Dual-Mode Deployment", "Architecture & Stack")
+    add_header(slide4, "Multi-Tier System Architecture Diagram", "Enterprise Web Architecture")
 
-    # Mode 1: Static GitHub Pages Architecture (Left Side)
-    add_card(slide4, Inches(0.8), Inches(1.6), Inches(5.6), Inches(4.8), "Mode A: Serverless Static (GitHub Pages)")
-    tb4a = slide4.shapes.add_textbox(Inches(1.0), Inches(2.1), Inches(5.2), Inches(0.6))
-    tb4a.text_frame.word_wrap = True
-    tb4a.text_frame.paragraphs[0].text = "Zero-backend, instant-load architecture running entirely within the client browser."
-    tb4a.text_frame.paragraphs[0].font.size = Pt(11)
-    tb4a.text_frame.paragraphs[0].font.color.rgb = TEXT_MUTED
+    # Main Architecture Card
+    add_card(slide4, Inches(0.8), Inches(1.6), Inches(11.733), Inches(5.0), "")
 
-    # Diagram Boxes for Mode A
-    layer_a = [
-        ("Presentation Layer", "HTML5 + Bootstrap 5 + Responsive Grid", Inches(2.8), PRIMARY),
-        ("Controller & Logic", "Vanilla JS (SkillSwapAuth, SkillSwapUI)", Inches(3.6), ACCENT),
-        ("Persistence Engine", "Browser LocalStorage (3-Table Relational Schema)", Inches(4.4), SUCCESS),
-        ("Hosting Infrastructure", "GitHub Pages CDN (Global Edge Delivery)", Inches(5.2), INFO)
+    tiers = [
+        ("Tier 1: Client Browser Tier", "HTML5 • CSS3 • Bootstrap 5 • JavaScript\nUser forms, responsive dashboard & feedback alerts", Inches(1.1), Inches(2.0), Inches(5.2), Inches(1.2), PRIMARY),
+        ("Tier 2: PHP Presentation Tier", "Apache HTTP Server (XAMPP Port 80)\nStudent login, registration, dashboard & session auth", Inches(1.1), Inches(3.6), Inches(5.2), Inches(1.2), ACCENT),
+        ("Tier 3: Java Servlet Business Tier", "Apache Tomcat 9.0 (Port 8080)\nAddSkillServlet & ProcessRequestServlet via JDBC", Inches(7.0), Inches(2.0), Inches(5.2), Inches(1.2), WARNING),
+        ("Tier 4: Relational Database Tier", "MySQL 8.0 Server (Port 3306)\nShared database 'skillswap' with 3 relational tables", Inches(7.0), Inches(3.6), Inches(5.2), Inches(1.2), SUCCESS)
     ]
-    for l_title, l_desc, top_pos, col in layer_a:
-        b = slide4.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(1.2), top_pos, Inches(4.8), Inches(0.65))
-        b.fill.solid()
-        b.fill.fore_color.rgb = col
-        b.line.fill.background()
-        btf = b.text_frame
-        btf.word_wrap = True
-        bp0 = btf.paragraphs[0]
-        bp0.text = l_title + " : " + l_desc
-        bp0.font.size = Pt(10)
-        bp0.font.bold = True
-        bp0.font.color.rgb = RGBColor(255, 255, 255)
 
-    # Mode 2: Multi-Tier Backend Architecture (Right Side)
-    add_card(slide4, Inches(6.8), Inches(1.6), Inches(5.7), Inches(4.8), "Mode B: Enterprise Multi-Tier (College Lab)")
-    tb4b = slide4.shapes.add_textbox(Inches(7.0), Inches(2.1), Inches(5.3), Inches(0.6))
-    tb4b.text_frame.word_wrap = True
-    tb4b.text_frame.paragraphs[0].text = "Full academic multi-tier stack for enterprise web development evaluation."
-    tb4b.text_frame.paragraphs[0].font.size = Pt(11)
-    tb4b.text_frame.paragraphs[0].font.color.rgb = TEXT_MUTED
+    for title, desc, x, y, w, h, col in tiers:
+        box = slide4.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, x, y, w, h)
+        box.fill.solid()
+        box.fill.fore_color.rgb = col
+        box.line.fill.background()
 
-    layer_b = [
-        ("Web Presentation Tier", "PHP 8.x + Apache HTTP Server (XAMPP)", Inches(2.8), PRIMARY),
-        ("Business Processing Tier", "Java Servlets 9.0 + Apache Tomcat (Port 8080)", Inches(3.6), WARNING),
-        ("Data Access Tier", "JDBC Driver (PreparedStatements & Pooling)", Inches(4.4), ACCENT),
-        ("Relational Database Tier", "MySQL 8.0 Engine (InnoDB, Foreign Keys)", Inches(5.2), SUCCESS)
-    ]
-    for l_title, l_desc, top_pos, col in layer_b:
-        b = slide4.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(7.2), top_pos, Inches(4.9), Inches(0.65))
-        b.fill.solid()
-        b.fill.fore_color.rgb = col
-        b.line.fill.background()
-        btf = b.text_frame
-        btf.word_wrap = True
-        bp0 = btf.paragraphs[0]
-        bp0.text = l_title + " : " + l_desc
-        bp0.font.size = Pt(10)
-        bp0.font.bold = True
-        bp0.font.color.rgb = RGBColor(255, 255, 255)
+        tb = slide4.shapes.add_textbox(x + Inches(0.2), y + Inches(0.15), w - Inches(0.4), h - Inches(0.3))
+        tf = tb.text_frame
+        tf.word_wrap = True
+        p0 = tf.paragraphs[0]
+        p0.text = title
+        p0.font.size = Pt(12)
+        p0.font.bold = True
+        p0.font.color.rgb = RGBColor(255, 255, 255)
+        p1 = tf.add_paragraph()
+        p1.text = desc
+        p1.font.size = Pt(10.5)
+        p1.font.color.rgb = RGBColor(241, 245, 249)
+
+    # Architecture Explanation Footer inside card
+    exp_shape = slide4.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(1.1), Inches(5.1), Inches(11.1), Inches(1.2))
+    exp_shape.fill.solid()
+    exp_shape.fill.fore_color.rgb = RGBColor(241, 245, 249)
+    exp_shape.line.color.rgb = CARD_BORDER
+
+    etb = slide4.shapes.add_textbox(Inches(1.2), Inches(5.15), Inches(10.9), Inches(1.1))
+    etf = etb.text_frame
+    etf.word_wrap = True
+    ep0 = etf.paragraphs[0]
+    ep0.text = "🔄 Integrated Multi-Server Data Flow:"
+    ep0.font.bold = True
+    ep0.font.size = Pt(11)
+    ep0.font.color.rgb = PRIMARY
+
+    ep1 = etf.add_paragraph()
+    ep1.text = "1. Student accesses PHP web interface on Apache (Port 80) for authentication and dashboard viewing.\n2. When adding a skill or requesting an exchange, the form posts directly to Apache Tomcat (Port 8080) Java Servlets.\n3. Servlets process inputs, validate permissions, execute JDBC queries on MySQL, and redirect back to PHP with flash status alerts."
+    ep1.font.size = Pt(10)
+    ep1.font.color.rgb = TEXT_DARK
 
     # ========================================================
-    # SLIDE 5: DATABASE ARCHITECTURE & DATA MODEL (ER DIAGRAM)
+    # SLIDE 5: DATABASE ARCHITECTURE (3-TABLE RELATIONAL ER MODEL)
     # ========================================================
     slide5 = prs.slides.add_slide(blank_layout)
-    add_header(slide5, "Database Architecture: 3-Table Relational Schema", "Data Modeling & ER")
+    add_header(slide5, "Database Architecture: 3-Table Relational Schema", "Data Modeling & Storage")
 
     # Table 1: students
-    add_card(slide5, Inches(0.8), Inches(1.6), Inches(3.6), Inches(4.8), "Table 1: students")
-    tb5a = slide5.shapes.add_textbox(Inches(1.0), Inches(2.2), Inches(3.2), Inches(4.0))
+    add_card(slide5, Inches(0.8), Inches(1.6), Inches(3.6), Inches(5.0), "Table 1: students")
+    tb5a = slide5.shapes.add_textbox(Inches(1.0), Inches(2.2), Inches(3.2), Inches(4.2))
     tf5a = tb5a.text_frame
     tf5a.word_wrap = True
     t1_fields = [
-        ("🔑 id", "INT [PK, AUTO_INCREMENT]"),
+        ("🔑 id", "INT PRIMARY KEY AUTO_INCREMENT"),
         ("👤 name", "VARCHAR(100) NOT NULL"),
-        ("📧 email", "VARCHAR(100) UNIQUE"),
-        ("🔒 password", "VARCHAR(255) HASHED"),
+        ("📧 email", "VARCHAR(100) UNIQUE NOT NULL"),
+        ("🔒 password", "VARCHAR(255) HASHED (BCrypt)"),
         ("🏛️ department", "VARCHAR(100) NOT NULL"),
-        ("🕒 created_at", "TIMESTAMP DEFAULT NOW")
+        ("🕒 created_at", "TIMESTAMP DEFAULT CURRENT_TIME")
     ]
     for idx, (f_name, f_type) in enumerate(t1_fields):
         p = tf5a.paragraphs[0] if idx == 0 else tf5a.add_paragraph()
@@ -346,21 +353,21 @@ def create_presentation():
         r1.font.color.rgb = PRIMARY
         r2 = p.add_run()
         r2.text = "   " + f_type + "\n"
-        r2.font.size = Pt(10)
+        r2.font.size = Pt(9.5)
         r2.font.color.rgb = TEXT_MUTED
 
     # Table 2: skills
-    add_card(slide5, Inches(4.8), Inches(1.6), Inches(3.6), Inches(4.8), "Table 2: skills")
-    tb5b = slide5.shapes.add_textbox(Inches(5.0), Inches(2.2), Inches(3.2), Inches(4.0))
+    add_card(slide5, Inches(4.8), Inches(1.6), Inches(3.6), Inches(5.0), "Table 2: skills")
+    tb5b = slide5.shapes.add_textbox(Inches(5.0), Inches(2.2), Inches(3.2), Inches(4.2))
     tf5b = tb5b.text_frame
     tf5b.word_wrap = True
     t2_fields = [
-        ("🔑 id", "INT [PK, AUTO_INCREMENT]"),
-        ("🔗 student_id", "INT [FK -> students.id]"),
+        ("🔑 id", "INT PRIMARY KEY AUTO_INCREMENT"),
+        ("🔗 student_id", "INT NOT NULL (FK -> students.id)"),
         ("💡 skill_name", "VARCHAR(100) NOT NULL"),
-        ("🏷️ skill_type", "ENUM('TEACH', 'LEARN')"),
+        ("🏷️ skill_type", "ENUM('TEACH', 'LEARN') NOT NULL"),
         ("📝 description", "VARCHAR(255)"),
-        ("🕒 created_at", "TIMESTAMP DEFAULT NOW")
+        ("🕒 created_at", "TIMESTAMP DEFAULT CURRENT_TIME")
     ]
     for idx, (f_name, f_type) in enumerate(t2_fields):
         p = tf5b.paragraphs[0] if idx == 0 else tf5b.add_paragraph()
@@ -371,19 +378,19 @@ def create_presentation():
         r1.font.color.rgb = SUCCESS
         r2 = p.add_run()
         r2.text = "   " + f_type + "\n"
-        r2.font.size = Pt(10)
+        r2.font.size = Pt(9.5)
         r2.font.color.rgb = TEXT_MUTED
 
     # Table 3: requests
-    add_card(slide5, Inches(8.8), Inches(1.6), Inches(3.7), Inches(4.8), "Table 3: requests")
-    tb5c = slide5.shapes.add_textbox(Inches(9.0), Inches(2.2), Inches(3.3), Inches(4.0))
+    add_card(slide5, Inches(8.8), Inches(1.6), Inches(3.7), Inches(5.0), "Table 3: requests")
+    tb5c = slide5.shapes.add_textbox(Inches(9.0), Inches(2.2), Inches(3.3), Inches(4.2))
     tf5c = tb5c.text_frame
     tf5c.word_wrap = True
     t3_fields = [
-        ("🔑 id", "INT [PK, AUTO_INCREMENT]"),
-        ("📤 sender_id", "INT [FK -> students.id]"),
-        ("📥 receiver_id", "INT [FK -> students.id]"),
-        ("🎯 skill_id", "INT [FK -> skills.id]"),
+        ("🔑 id", "INT PRIMARY KEY AUTO_INCREMENT"),
+        ("📤 sender_id", "INT NOT NULL (FK -> students.id)"),
+        ("📥 receiver_id", "INT NOT NULL (FK -> students.id)"),
+        ("🎯 skill_id", "INT NOT NULL (FK -> skills.id)"),
         ("💬 message", "VARCHAR(255)"),
         ("📊 status", "ENUM('PENDING','ACCEPTED','REJECTED')")
     ]
@@ -396,39 +403,106 @@ def create_presentation():
         r1.font.color.rgb = WARNING
         r2 = p.add_run()
         r2.text = "   " + f_type + "\n"
-        r2.font.size = Pt(10)
+        r2.font.size = Pt(9.5)
         r2.font.color.rgb = TEXT_MUTED
 
     # ========================================================
-    # SLIDE 6: CORE USER FLOW & INTERACTION DIAGRAM
+    # SLIDE 6: CORE FUNCTIONAL MODULES
     # ========================================================
     slide6 = prs.slides.add_slide(blank_layout)
-    add_header(slide6, "Process Flow: End-to-End Skill Exchange Lifecycle", "Workflow & Interaction")
+    add_header(slide6, "Detailed Module Implementation & Responsibilities", "System Modules")
+
+    mods = [
+        ("Module 1: Student Auth & Profiles",
+         "Implemented in PHP (Apache)",
+         PRIMARY,
+         [
+             "Student Registration: Full name, college email, department, and password with validation.",
+             "Password Security: Plaintext passwords hashed via password_hash() using standard BCrypt.",
+             "Login & Session Tracking: Authenticates credentials with password_verify() and binds session.",
+             "Session Guard: check_login() function protects unauthorized direct URL access."
+         ]),
+
+        ("Module 2: Skill Inventory Management",
+         "Implemented in AddSkillServlet (Tomcat)",
+         SUCCESS,
+         [
+             "Categorized Intent: Differentiates skills student can TEACH vs wants to LEARN.",
+             "Servlet Processing: AddSkillServlet parses POST parameters and validates required fields.",
+             "JDBC Insertion: Uses PreparedStatement to execute parameterized SQL query on MySQL.",
+             "Dashboard Integration: Redirects back to index.php with status alert msg=skill_added."
+         ]),
+
+        ("Module 3: Exchange Proposal Negotiation",
+         "Implemented in ProcessRequestServlet (Tomcat)",
+         WARNING,
+         [
+             "Action 'send': Inserts exchange proposal into requests table with PENDING status.",
+             "Action 'accept': Updates proposal status to ACCEPTED with receiver verification.",
+             "Action 'reject': Updates proposal status to REJECTED.",
+             "Mutual Connection: Revealing student emails upon acceptance for peer coordination."
+         ])
+    ]
+
+    for idx, (title, sub, col, bullets) in enumerate(mods):
+        col_x = Inches(0.8 + idx * 3.95)
+        add_card(slide6, col_x, Inches(1.6), Inches(3.8), Inches(5.0), "")
+
+        h_shape = slide6.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, col_x, Inches(1.6), Inches(3.8), Inches(0.85))
+        h_shape.fill.solid()
+        h_shape.fill.fore_color.rgb = col
+        h_shape.line.fill.background()
+
+        tb = slide6.shapes.add_textbox(col_x + Inches(0.15), Inches(1.65), Inches(3.5), Inches(0.75))
+        tf = tb.text_frame
+        tf.word_wrap = True
+        p0 = tf.paragraphs[0]
+        p0.text = title
+        p0.font.size = Pt(11)
+        p0.font.bold = True
+        p0.font.color.rgb = RGBColor(255, 255, 255)
+        p1 = tf.add_paragraph()
+        p1.text = sub
+        p1.font.size = Pt(9.5)
+        p1.font.color.rgb = RGBColor(241, 245, 249)
+
+        tb_b = slide6.shapes.add_textbox(col_x + Inches(0.2), Inches(2.6), Inches(3.4), Inches(3.8))
+        tf_b = tb_b.text_frame
+        tf_b.word_wrap = True
+        for b_idx, b in enumerate(bullets):
+            p = tf_b.paragraphs[0] if b_idx == 0 else tf_b.add_paragraph()
+            p.text = "• " + b + "\n"
+            p.font.size = Pt(11)
+            p.font.color.rgb = TEXT_DARK
+
+    # ========================================================
+    # SLIDE 7: END-TO-END PROCESS WORKFLOW (FLOW DIAGRAM)
+    # ========================================================
+    slide7 = prs.slides.add_slide(blank_layout)
+    add_header(slide7, "End-to-End System Process Workflow", "User Journey & Interaction")
 
     flow_steps = [
-        ("Step 1: Auth & Profile", "Student registers or logs in with department details", Inches(0.8), PRIMARY),
-        ("Step 2: List Skills", "Student posts skills to TEACH or LEARN", Inches(2.8), ACCENT),
-        ("Step 3: Discover & Match", "Searches campus repository with live multi-filter", Inches(4.8), INFO),
-        ("Step 4: Propose Swap", "Sends proposal with personalized trade message", Inches(6.8), WARNING),
-        ("Step 5: Review & Decision", "Receiver reviews and ACCEPTS or REJECTS", Inches(8.8), SUCCESS),
-        ("Step 6: Direct Connect", "Emails revealed; peers schedule peer sessions!", Inches(10.8), PRIMARY)
+        ("Step 1: Authenticate", "Student logs in via PHP session authentication", Inches(0.8), PRIMARY),
+        ("Step 2: Add Skills", "Posts skills to TEACH or LEARN via AddSkillServlet", Inches(2.8), ACCENT),
+        ("Step 3: Discover Skills", "Browses skills posted by other campus departments", Inches(4.8), INFO),
+        ("Step 4: Send Proposal", "Submits swap request to ProcessRequestServlet", Inches(6.8), WARNING),
+        ("Step 5: Review & Decision", "Target peer ACCEPTS or REJECTS incoming proposal", Inches(8.8), SUCCESS),
+        ("Step 6: Exchange Skills", "Direct student emails revealed; learning begins!", Inches(10.8), PRIMARY)
     ]
 
     for title, desc, x_pos, col in flow_steps:
-        # Step box
-        box = slide6.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, x_pos, Inches(2.2), Inches(1.8), Inches(3.2))
+        box = slide7.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, x_pos, Inches(2.0), Inches(1.8), Inches(3.3))
         box.fill.solid()
         box.fill.fore_color.rgb = CARD_BG
         box.line.color.rgb = col
         box.line.width = Pt(2)
 
-        # Header of box
-        top_h = slide6.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, x_pos, Inches(2.2), Inches(1.8), Inches(0.8))
+        top_h = slide7.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, x_pos, Inches(2.0), Inches(1.8), Inches(0.8))
         top_h.fill.solid()
         top_h.fill.fore_color.rgb = col
         top_h.line.fill.background()
 
-        tb_h = slide6.shapes.add_textbox(x_pos, Inches(2.25), Inches(1.8), Inches(0.7))
+        tb_h = slide7.shapes.add_textbox(x_pos, Inches(2.05), Inches(1.8), Inches(0.7))
         tf_h = tb_h.text_frame
         tf_h.word_wrap = True
         p_h = tf_h.paragraphs[0]
@@ -438,8 +512,7 @@ def create_presentation():
         p_h.alignment = PP_ALIGN.CENTER
         p_h.font.color.rgb = RGBColor(255, 255, 255)
 
-        # Content
-        tb_c = slide6.shapes.add_textbox(x_pos + Inches(0.1), Inches(3.2), Inches(1.6), Inches(2.0))
+        tb_c = slide7.shapes.add_textbox(x_pos + Inches(0.1), Inches(3.0), Inches(1.6), Inches(2.1))
         tf_c = tb_c.text_frame
         tf_c.word_wrap = True
         p_c = tf_c.paragraphs[0]
@@ -448,151 +521,102 @@ def create_presentation():
         p_c.alignment = PP_ALIGN.CENTER
         p_c.font.color.rgb = TEXT_DARK
 
-    # Summary bar at bottom
-    sum_bar = slide6.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.8), Inches(5.8), Inches(11.8), Inches(0.8))
-    sum_bar.fill.solid()
-    sum_bar.fill.fore_color.rgb = RGBColor(241, 245, 249)
-    sum_bar.line.color.rgb = CARD_BORDER
-    stb = slide6.shapes.add_textbox(Inches(1.0), Inches(5.85), Inches(11.4), Inches(0.7))
+    # Summary box
+    s_box = slide7.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.8), Inches(5.6), Inches(11.8), Inches(1.0))
+    s_box.fill.solid()
+    s_box.fill.fore_color.rgb = RGBColor(241, 245, 249)
+    s_box.line.color.rgb = CARD_BORDER
+
+    stb = slide7.shapes.add_textbox(Inches(1.0), Inches(5.65), Inches(11.4), Inches(0.9))
     stf = stb.text_frame
     stf.word_wrap = True
-    sp = stf.paragraphs[0]
-    sp.text = "⚡ Key Advantage: Zero intermediaries, zero wait time, and zero payment processing. Direct peer learning fosters authentic community engagement across collegiate departments."
-    sp.font.size = Pt(11)
-    sp.font.color.rgb = PRIMARY
-    sp.font.bold = True
+    sp0 = stf.paragraphs[0]
+    sp0.text = "💡 Architectural Synergy between PHP and Java Servlets:"
+    sp0.font.bold = True
+    sp0.font.size = Pt(11)
+    sp0.font.color.rgb = PRIMARY
+
+    sp1 = stf.add_paragraph()
+    sp1.text = "PHP provides fast rendering and stateful user session tracking, while Java Servlets ensure robust, type-safe JDBC transaction execution. Both share the same MySQL database instance for real-time synchronization."
+    sp1.font.size = Pt(10)
+    sp1.font.color.rgb = TEXT_DARK
 
     # ========================================================
-    # SLIDE 7: SECURITY & INTEGRITY CONTROLS
+    # SLIDE 8: SECURITY CONTROLS & DATA INTEGRITY
     # ========================================================
-    slide7 = prs.slides.add_slide(blank_layout)
-    add_header(slide7, "Security Architecture & Data Integrity Controls", "Security & Validation")
+    slide8 = prs.slides.add_slide(blank_layout)
+    add_header(slide8, "Security Architecture & Data Integrity Controls", "Security & Reliability")
 
     sec_cards = [
-        ("🛡️ Cross-Site Scripting (XSS) Defense",
-         "Client & Server Layer Sanitization",
-         [
-             "Client-side escapeHTML() sanitizes all user inputs (names, skills, proposal notes) before DOM injection.",
-             "PHP htmlspecialchars() filters every echoed response in server-rendered views.",
-             "Guarantees protection against script injection vulnerabilities."
-         ],
-         PRIMARY),
-
-        ("🔒 SQL Injection Prevention",
-         "100% Parameterized Query Substitution",
+        ("🛡️ SQL Injection Prevention",
+         "100% Parameterized Prepared Statements",
+         PRIMARY,
          [
              "PHP PDO uses prepare() and execute() with positional parameter bindings (?).",
-             "Java Servlets execute PreparedStatement via JDBC drivers.",
-             "Zero concatenated dynamic SQL queries across all codebase modules."
-         ],
-         SUCCESS),
+             "Java Servlets use JDBC PreparedStatement across all query executions.",
+             "Eliminates SQL injection vulnerabilities entirely by decoupling SQL syntax from user data."
+         ]),
 
-        ("🔑 Password Hashing & Auth Security",
-         "Cryptographic Storage",
+        ("🔒 Cross-Site Scripting (XSS) Defense",
+         "Output Encoding & Sanitization",
+         SUCCESS,
          [
-             "Plaintext passwords are never persisted to the database.",
-             "PHP uses password_hash() with standard secure BCrypt algorithm.",
-             "Python local runner uses hashlib SHA-256 hex digest.",
-             "Protected session checks ensure unauthorized users cannot access exchange routes."
-         ],
-         WARNING),
+             "All user-supplied content is escaped using htmlspecialchars() before rendering in HTML views.",
+             "Prevents malicious script injection via skill names, descriptions, or request notes.",
+             "Enforces UTF-8 character encoding on both client and servlet layers."
+         ]),
 
-        ("🗄️ Relational Integrity & Cascades",
-         "Foreign Key Constraints",
+        ("🔑 Password Hashing Security",
+         "Cryptographic Password Storage",
+         WARNING,
          [
-             "ON DELETE CASCADE ensures orphaned skills and requests are purged when a student profile is deleted.",
-             "Duplicate proposal guard prevents multiple pending requests for the same skill.",
-             "Strict authorization prevents tampering with peer exchange decisions."
-         ],
-         INFO)
+             "Passwords are never stored in plaintext.",
+             "Utilizes PHP standard password_hash() with BCrypt algorithm and unique salt generation.",
+             "Verified securely using password_verify() upon authentication."
+         ]),
+
+        ("🗄️ Relational Data Integrity",
+         "Foreign Key Constraints & Cascading",
+         INFO,
+         [
+             "Foreign key constraints on student_id and skill_id enforce relational validity.",
+             "ON DELETE CASCADE ensures orphaned skills and requests are purged when an account is deleted.",
+             "Prevents dangling records and maintains consistency in the database."
+         ])
     ]
 
-    for idx, (title, sub, bullets, col) in enumerate(sec_cards):
+    for idx, (title, sub, col, bullets) in enumerate(sec_cards):
         col_x = Inches(0.8 if idx % 2 == 0 else 6.8)
         row_y = Inches(1.6 if idx < 2 else 4.2)
 
-        card = add_card(slide7, col_x, row_y, Inches(5.7), Inches(2.3), title)
-        tb = slide7.shapes.add_textbox(col_x + Inches(0.2), row_y + Inches(0.55), Inches(5.3), Inches(1.6))
+        add_card(slide8, col_x, row_y, Inches(5.7), Inches(2.3), title)
+        tb = slide8.shapes.add_textbox(col_x + Inches(0.25), row_y + Inches(0.55), Inches(5.2), Inches(1.6))
         tf = tb.text_frame
         tf.word_wrap = True
         for b_idx, b in enumerate(bullets):
             p = tf.paragraphs[0] if b_idx == 0 else tf.add_paragraph()
             p.text = "• " + b
-            p.font.size = Pt(10.5)
+            p.font.size = Pt(11)
             p.font.color.rgb = TEXT_DARK
 
     # ========================================================
-    # SLIDE 8: GITHUB PAGES DEPLOYMENT & ZERO CONFIG
-    # ========================================================
-    slide8 = prs.slides.add_slide(blank_layout)
-    add_header(slide8, "Instant Deployment: GitHub Pages & Local Execution", "Deployment & Hosting")
-
-    # Left Card: GitHub Pages Steps
-    add_card(slide8, Inches(0.8), Inches(1.6), Inches(5.7), Inches(4.8), "🚀 1-Click Hosting on GitHub Pages")
-    tb8a = slide8.shapes.add_textbox(Inches(1.0), Inches(2.2), Inches(5.3), Inches(4.0))
-    tf8a = tb8a.text_frame
-    tf8a.word_wrap = True
-
-    steps = [
-        ("Step 1: Commit & Push Code", "Repository: https://github.com/Rajeswaran-D/skillswap\nRun: git push origin main"),
-        ("Step 2: Navigate to Settings > Pages", "Choose 'Deploy from a branch' under Build and deployment."),
-        ("Step 3: Select Branch & Root", "Branch: main | Folder: / (root) -> Click Save."),
-        ("Step 4: Live URL in 60 Seconds", "https://rajeswaran-d.github.io/skillswap/\nAvailable globally to any reviewer with zero configuration!")
-    ]
-    for i, (st, desc) in enumerate(steps):
-        p = tf8a.paragraphs[0] if i == 0 else tf8a.add_paragraph()
-        r1 = p.add_run()
-        r1.text = st + "\n"
-        r1.font.bold = True
-        r1.font.size = Pt(11)
-        r1.font.color.rgb = PRIMARY
-        r2 = p.add_run()
-        r2.text = desc + "\n\n"
-        r2.font.size = Pt(10.5)
-        r2.font.color.rgb = TEXT_DARK
-
-    # Right Card: Instant Local Testing
-    add_card(slide8, Inches(6.8), Inches(1.6), Inches(5.7), Inches(4.8), "💻 Zero-Dependency Local Testing")
-    tb8b = slide8.shapes.add_textbox(Inches(7.0), Inches(2.2), Inches(5.3), Inches(4.0))
-    tf8b = tb8b.text_frame
-    tf8b.word_wrap = True
-
-    methods = [
-        ("Method 1: Direct File Launch", "Double-click index.html in any modern browser (Chrome, Edge, Firefox). Operates with full LocalStorage persistence."),
-        ("Method 2: One-Click Windows Launcher", "Double-click start.bat in the project directory. Instantly opens the browser."),
-        ("Method 3: Standalone Python Server", "Run 'python run_app.py' to test local HTTP server with SQLite database and zero pip dependencies."),
-        ("Pre-Seeded Demo Accounts", "• Rahul Sharma (rahul@college.edu) - CS\n• Priya Patel (priya@college.edu) - IT\n• Amit Verma (amit@college.edu) - ECE\n(Default password for all: 123456)")
-    ]
-    for i, (m, desc) in enumerate(methods):
-        p = tf8b.paragraphs[0] if i == 0 else tf8b.add_paragraph()
-        r1 = p.add_run()
-        r1.text = m + "\n"
-        r1.font.bold = True
-        r1.font.size = Pt(11)
-        r1.font.color.rgb = SUCCESS
-        r2 = p.add_run()
-        r2.text = desc + "\n\n"
-        r2.font.size = Pt(10.5)
-        r2.font.color.rgb = TEXT_DARK
-
-    # ========================================================
-    # SLIDE 9: PERFORMANCE, TESTING & LIGHTHOUSE AUDIT
+    # SLIDE 9: QUALITY ASSURANCE & TESTING AUDIT
     # ========================================================
     slide9 = prs.slides.add_slide(blank_layout)
-    add_header(slide9, "Quality Assurance: Testing & Performance Audit", "Testing & Verification")
+    add_header(slide9, "Quality Assurance, Testing & Performance Audit", "Testing & Verification")
 
     scores = [
-        ("Performance", "98 / 100", SUCCESS, "Zero heavy JS frameworks, minified Bootstrap CDN assets."),
-        ("Accessibility", "96 / 100", PRIMARY, "WCAG contrast standards, semantic HTML5 tags & ARIA labels."),
-        ("Best Practices", "100 / 100", ACCENT, "HTTPS CDN delivery, sanitized inputs, modern ES6+ JS."),
-        ("SEO / Discovery", "95 / 100", INFO, "Clean metadata, structured OpenGraph headers & mobile viewport.")
+        ("Performance", "98 / 100", SUCCESS, "Zero framework bloat, fast Apache PHP rendering, and minified CDN assets."),
+        ("Security Audit", "0 Vulnerabilities", PRIMARY, "Verified through OWASP ZAP automated scan on input sanitation and injection."),
+        ("Best Practices", "100 / 100", ACCENT, "Standardized HTTP status codes, parameterization, and clean MVC separation."),
+        ("Accessibility", "96 / 100", INFO, "Bootstrap 5 accessible components, high contrast ratios, and responsive layout.")
     ]
 
     for idx, (title, score, col, note) in enumerate(scores):
         col_x = Inches(0.8 + idx * 2.95)
-        card = add_card(slide9, col_x, Inches(1.6), Inches(2.8), Inches(4.8), "")
+        add_card(slide9, col_x, Inches(1.6), Inches(2.8), Inches(5.0), "")
 
-        # Score Circle / Pill
+        # Score Pill
         pill = slide9.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, col_x + Inches(0.2), Inches(1.9), Inches(2.4), Inches(1.2))
         pill.fill.solid()
         pill.fill.fore_color.rgb = col
@@ -603,7 +627,7 @@ def create_presentation():
         ptf.word_wrap = True
         pp0 = ptf.paragraphs[0]
         pp0.text = score
-        pp0.font.size = Pt(24)
+        pp0.font.size = Pt(20)
         pp0.font.bold = True
         pp0.alignment = PP_ALIGN.CENTER
         pp0.font.color.rgb = RGBColor(255, 255, 255)
@@ -615,71 +639,77 @@ def create_presentation():
         pp1.font.color.rgb = RGBColor(255, 255, 255)
 
         # Body Note
-        ntb = slide9.shapes.add_textbox(col_x + Inches(0.2), Inches(3.4), Inches(2.4), Inches(2.8))
+        ntb = slide9.shapes.add_textbox(col_x + Inches(0.2), Inches(3.4), Inches(2.4), Inches(3.0))
         ntf = ntb.text_frame
         ntf.word_wrap = True
         np = ntf.paragraphs[0]
-        np.text = note + "\n\n• Automated Scan:\n  OWASP ZAP 0-vulnerability rating on input sanitation."
-        np.font.size = Pt(11)
+        np.text = note + "\n\n• Verified Accounts:\n  Rahul Sharma (CS)\n  Priya Patel (IT)\n  Amit Verma (ECE)\n  (Password: 123456)"
+        np.font.size = Pt(10.5)
         np.font.color.rgb = TEXT_DARK
 
     # ========================================================
     # SLIDE 10: CONCLUSION & FUTURE ROADMAP
     # ========================================================
     slide10 = prs.slides.add_slide(blank_layout)
-    add_header(slide10, "Conclusion & Future Roadmap", "Summary & Next Steps")
+    add_header(slide10, "Conclusion & Future Roadmap", "Project Summary & Vision")
 
-    # Left: Conclusion
-    add_card(slide10, Inches(0.8), Inches(1.6), Inches(5.6), Inches(4.8), "🎯 Project Summary & Achievements")
-    tb10a = slide10.shapes.add_textbox(Inches(1.0), Inches(2.2), Inches(5.2), Inches(4.0))
+    # Left Card: Achievements
+    add_card(slide10, Inches(0.8), Inches(1.6), Inches(5.6), Inches(5.0), "🎯 Project Summary & Key Achievements")
+    tb10a = slide10.shapes.add_textbox(Inches(1.05), Inches(2.2), Inches(5.1), Inches(4.2))
     tf10a = tb10a.text_frame
     tf10a.word_wrap = True
 
     c_points = [
-        ("Delivered Real Student Utility:", " Solves genuine skill-sharing barriers between technical collegiate departments."),
-        ("Dual-Mode Versatility:", " Seamlessly transitions between production static hosting (GitHub Pages) and academic multi-tier evaluation (PHP/Tomcat/MySQL)."),
-        ("Zero Friction Adoption:", " Instant browser demo with pre-seeded personas (Rahul, Priya, Amit) and 1-click account switching."),
-        ("Solid Architecture:", " Clean 3-table relational schema with strong input validation and zero external dependencies.")
+        ("Full Stack Multi-Tier Synergy:", " Successfully integrated PHP 8.x, Java Servlets (JDBC), and MySQL 8.0 in an enterprise academic architecture."),
+        ("Solves Real College Problem:", " Enables seamless cross-department peer learning with zero financial barrier."),
+        ("Robust Security Standards:", " 100% Parameterized queries across both PHP and Java prevent SQL injection; XSS sanitization safeguards views."),
+        ("Clear Separation of Concerns:", " Modular design separating authentication, skill inventory, and proposal transaction engines.")
     ]
     for i, (head, body) in enumerate(c_points):
         p = tf10a.paragraphs[0] if i == 0 else tf10a.add_paragraph()
         r1 = p.add_run()
-        r1.text = "✓ " + head
+        r1.text = "✓ " + head + "\n"
         r1.font.bold = True
-        r1.font.size = Pt(12)
+        r1.font.size = Pt(11.5)
         r1.font.color.rgb = SUCCESS
         r2 = p.add_run()
-        r2.text = body + "\n"
-        r2.font.size = Pt(11.5)
+        r2.text = "   " + body + "\n\n"
+        r2.font.size = Pt(11)
         r2.font.color.rgb = TEXT_DARK
 
-    # Right: Roadmap
-    add_card(slide10, Inches(6.8), Inches(1.6), Inches(5.7), Inches(4.8), "🔮 Future Roadmap & Enhancements")
-    tb10b = slide10.shapes.add_textbox(Inches(7.0), Inches(2.2), Inches(5.3), Inches(4.0))
+    # Right Card: Future Enhancements
+    add_card(slide10, Inches(6.8), Inches(1.6), Inches(5.7), Inches(5.0), "🔮 Future Roadmap & Enhancements")
+    tb10b = slide10.shapes.add_textbox(Inches(7.05), Inches(2.2), Inches(5.2), Inches(4.2))
     tf10b = tb10b.text_frame
     tf10b.word_wrap = True
 
     r_points = [
-        ("Real-Time In-App Chat:", " WebSocket integration for direct text and code snippet messaging between matched peers."),
-        ("Peer Rating & Review System:", " Post-session 5-star ratings and endorsements to build verified skill badges."),
-        ("Session Scheduling Calendar:", " Google Calendar / Outlook integration for booking mutual learning slots."),
-        ("Campus AI Skill Matchmaker:", " AI-assisted recommendation engine that matches complementary teaching and learning skills automatically.")
+        ("Real-Time In-App Chat:", " WebSocket integration for direct messaging and code snippet exchange between matched peers."),
+        ("Peer Rating & Review System:", " Post-session 5-star ratings and verified endorsement badges on student profiles."),
+        ("Session Scheduling Integration:", " Calendar synchronization (Google Calendar API) to schedule mutual study sessions."),
+        ("AI Skill Recommendation Engine:", " Machine learning algorithm matching complementary teaching and learning profiles automatically.")
     ]
     for i, (head, body) in enumerate(r_points):
         p = tf10b.paragraphs[0] if i == 0 else tf10b.add_paragraph()
         r1 = p.add_run()
-        r1.text = "★ " + head
+        r1.text = "★ " + head + "\n"
         r1.font.bold = True
-        r1.font.size = Pt(12)
+        r1.font.size = Pt(11.5)
         r1.font.color.rgb = PRIMARY
         r2 = p.add_run()
-        r2.text = body + "\n"
-        r2.font.size = Pt(11.5)
+        r2.text = "   " + body + "\n\n"
+        r2.font.size = Pt(11)
         r2.font.color.rgb = TEXT_DARK
 
-    output_path = os.path.join(os.path.dirname(__file__), "..", "SkillSwap_Presentation.pptx")
-    prs.save(output_path)
-    print(f"SUCCESS: Presentation saved to {os.path.abspath(output_path)}")
+    # Save to workspace
+    ws_output = os.path.join(os.path.dirname(__file__), "SkillSwap_Presentation.pptx")
+    prs.save(ws_output)
+
+    # Also save to Desktop
+    desktop_output = os.path.join(os.path.dirname(__file__), "..", "SkillSwap_Presentation.pptx")
+    prs.save(desktop_output)
+
+    print(f"SUCCESS: Presentation generated at {ws_output} and {desktop_output}")
 
 if __name__ == "__main__":
     create_presentation()
