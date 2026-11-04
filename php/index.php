@@ -6,8 +6,12 @@ $student_id = $_SESSION["student_id"];
 $student_name = $_SESSION["student_name"];
 $student_dept = $_SESSION["student_dept"];
 
-// Tomcat Servlets base URL (Change port if your Tomcat uses 8088 or other)
-$tomcat_url = "http://localhost:8080/skillswap-servlets";
+// Servlets vs Pure PHP Toggle:
+// If running locally with Apache Tomcat, set $use_tomcat = true
+// For online shared hosting (InfinityFree, cPanel, etc.) where Tomcat is not supported, set $use_tomcat = false
+$use_tomcat = false; 
+$add_skill_url = $use_tomcat ? "http://localhost:8080/skillswap-servlets/add-skill" : "add_skill.php";
+$process_request_url = $use_tomcat ? "http://localhost:8080/skillswap-servlets/process-request" : "process_request.php";
 
 // 1. Fetch skills added by the current logged-in student
 $my_skills_stmt = $conn->prepare("SELECT * FROM skills WHERE student_id = ? ORDER BY id DESC");
@@ -99,8 +103,8 @@ $outgoing_requests = $outgoing_stmt->fetchAll();
             <div class="card shadow-sm border-0 rounded-3 mb-4">
                 <div class="card-header bg-white fw-bold py-3">Add a Skill</div>
                 <div class="card-body">
-                    <!-- Form submits directly to Tomcat Java Servlet -->
-                    <form action="<?= $tomcat_url ?>/add-skill" method="POST">
+                    <!-- Form submits to Java Servlet or PHP handler depending on $use_tomcat -->
+                    <form action="<?= $add_skill_url ?>" method="POST">
                         <input type="hidden" name="student_id" value="<?= $student_id ?>">
 
                         <div class="mb-3">
@@ -191,7 +195,7 @@ $outgoing_requests = $outgoing_stmt->fetchAll();
                                             <td><?= htmlspecialchars($os['department']) ?></td>
                                             <td class="text-end">
                                                 <!-- Send Exchange Request Form (submits to Java Servlet) -->
-                                                <form action="<?= $tomcat_url ?>/process-request" method="POST" class="d-inline">
+                                                <form action="<?= $process_request_url ?>" method="POST" class="d-inline">
                                                     <input type="hidden" name="action" value="send">
                                                     <input type="hidden" name="sender_id" value="<?= $student_id ?>">
                                                     <input type="hidden" name="receiver_id" value="<?= $os['student_id'] ?>">
@@ -252,14 +256,14 @@ $outgoing_requests = $outgoing_stmt->fetchAll();
                                             <td class="text-end">
                                                 <?php if ($in['status'] === 'PENDING'): ?>
                                                     <!-- Accept Form (Processed by Java Servlet) -->
-                                                    <form action="<?= $tomcat_url ?>/process-request" method="POST" class="d-inline">
+                                                    <form action="<?= $process_request_url ?>" method="POST" class="d-inline">
                                                         <input type="hidden" name="action" value="accept">
                                                         <input type="hidden" name="request_id" value="<?= $in['id'] ?>">
                                                         <input type="hidden" name="receiver_id" value="<?= $student_id ?>">
                                                         <button type="submit" class="btn btn-sm btn-success">Accept</button>
                                                     </form>
                                                     <!-- Reject Form (Processed by Java Servlet) -->
-                                                    <form action="<?= $tomcat_url ?>/process-request" method="POST" class="d-inline">
+                                                    <form action="<?= $process_request_url ?>" method="POST" class="d-inline">
                                                         <input type="hidden" name="action" value="reject">
                                                         <input type="hidden" name="request_id" value="<?= $in['id'] ?>">
                                                         <input type="hidden" name="receiver_id" value="<?= $student_id ?>">
